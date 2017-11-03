@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FlipBoardView">
+        <attr name="img" format="reference" />
+        <attr name="slopeAngle" format="integer" />
+        <attr name="flipAngle" format="integer" />
+    </declare-styleable>
+
+</resources>
