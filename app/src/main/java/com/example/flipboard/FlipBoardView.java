@@ -31,6 +31,7 @@ public class FlipBoardView extends AppCompatImageView {
     private Path slopePath = new Path();
     private Camera flatCamera = new Camera();
     private Camera slopeCamera = new Camera();
+    private AnimatorSet animatorSet = new AnimatorSet();
 
     private float rotateAngle = 0;
     private float slopeAngleY = 0;
@@ -131,11 +132,19 @@ public class FlipBoardView extends AppCompatImageView {
 
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (animatorSet.isRunning()) animatorSet.end();
+    }
+
     public void start() {
         if (bitmap == null) {
             Toast.makeText(context, "图片为空", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (animatorSet.isRunning()) animatorSet.end();
+
         this.rotateAngle = 0;
         this.flipAngleY = 0;
         ObjectAnimator animator1 = ObjectAnimator.ofFloat(this, "slopeAngleY", 0, customSlope);
@@ -145,7 +154,6 @@ public class FlipBoardView extends AppCompatImageView {
         ObjectAnimator animator3 = ObjectAnimator.ofFloat(this, "flipAngleY", 0, customFlip);
         animator3.setDuration(1000);
 
-        AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playSequentially(animator1, animator2, animator3);
         animatorSet.start();
     }
